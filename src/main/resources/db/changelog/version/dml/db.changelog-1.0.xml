@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog logicalFilePath="db.changelog-master.xml" xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="6" author="IV">
+        <comment>Insert user_1</comment>
+        <sql>
+            INSERT INTO users(id, date_of_create, is_active, login, mail, password, gold)
+            VALUES (1,
+                    CURRENT_TIMESTAMP,
+                    true,
+                    'user_1',
+                    'user_1',
+                    '$2a$10$LGau66DbAIfq64572BaGeOTjEnuKogz6lRHLvpSQGw6avaUQ6J2mu',
+                    100
+                   );
+        </sql>
+    </changeSet>
+
+    <changeSet id="7" author="IV">
+        <comment>Insert admin_1</comment>
+        <sql>
+            INSERT INTO users(id, date_of_create, is_active, login, mail, password, gold)
+            VALUES (2,
+                    CURRENT_TIMESTAMP,
+                    true,
+                    'admin_1',
+                    'admin_1',
+                    '$2a$10$LGau66DbAIfq64572BaGeOTjEnuKogz6lRHLvpSQGw6avaUQ6J2mu',
+                    100
+                   );
+        </sql>
+    </changeSet>
+
+    <changeSet id="8" author="IV">
+        <comment>Insert user_role for user_1</comment>
+        <sql>
+            INSERT INTO user_role (id,user_role)
+            VALUES (1,'USER');
+        </sql>
+    </changeSet>
+
+    <changeSet id="9" author="IV">
+        <comment>Insert user_role for admin_1</comment>
+        <sql>
+            INSERT INTO user_role (id,user_role)
+            VALUES (2,'ADMIN');
+        </sql>
+    </changeSet>
+
+    <changeSet id="10" author="IV">
+        <comment>Insert basic ingredient: fire</comment>
+        <sql>
+            INSERT INTO ingredients (id,name,price,loss_probability)
+            VALUES (1,'fire',0,0);
+        </sql>
+    </changeSet>
+
+    <changeSet id="11" author="IV">
+        <comment>Insert basic ingredient: earth</comment>
+        <sql>
+            INSERT INTO ingredients (id,name,price,loss_probability)
+            VALUES (2,'earth',0,0);
+        </sql>
+    </changeSet>
+
+    <changeSet id="12" author="IV">
+        <comment>Insert basic ingredient: wind</comment>
+        <sql>
+            INSERT INTO ingredients (id,name,price,loss_probability)
+            VALUES (3,'wind',0,0);
+        </sql>
+    </changeSet>
+
+    <changeSet id="13" author="IV">
+        <comment>Insert basic ingredient: water</comment>
+        <sql>
+            INSERT INTO ingredients (id,name,price,loss_probability)
+            VALUES (4,'water',0,0);
+        </sql>
+    </changeSet>
+
+    <changeSet id="14" author="IV">
+        <comment>Insert basic elements into user_1</comment>
+        <sql>
+            INSERT INTO users_ingredients(ingredient_id, count, user_id)
+            VALUES (1, 1, 1);
+            INSERT INTO users_ingredients(ingredient_id, count, user_id)
+            VALUES (2, 1, 1);
+            INSERT INTO users_ingredients(ingredient_id, count, user_id)
+            VALUES (3, 1, 1);
+            INSERT INTO users_ingredients(ingredient_id, count, user_id)
+            VALUES (4, 1, 1);
+        </sql>
+    </changeSet>
+
+    <changeSet id="15" author="IV">
+        <comment>Insert basic elements into admin_1</comment>
+        <sql>
+            INSERT INTO users_ingredients(ingredient_id, count, user_id)
+            VALUES (1, 1, 2);
+            INSERT INTO users_ingredients(ingredient_id, count, user_id)
+            VALUES (2, 1, 2);
+            INSERT INTO users_ingredients(ingredient_id, count, user_id)
+            VALUES (3, 1, 2);
+            INSERT INTO users_ingredients(ingredient_id, count, user_id)
+            VALUES (4, 1, 2);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog logicalFilePath="db.changelog-master.xml" xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet id="1" author="IV">
+        <comment>Create users table</comment>
+        <sql>
+            CREATE TABLE users
+            (
+                id bigserial NOT NULL PRIMARY KEY,
+                date_of_create timestamp without time zone NOT NULL,
+                is_active boolean NOT NULL,
+                login character varying(50) UNIQUE NOT NULL,
+                mail character varying(50) UNIQUE NOT NULL ,
+                password character varying(60) NOT NULL,
+                gold integer
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="2" author="IV">
+        <comment>Create user_role table</comment>
+        <sql>
+            CREATE TABLE user_role
+            (
+                id bigint NOT NULL PRIMARY KEY REFERENCES users(id),
+                user_role character varying(50) NOT NULL
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="3" author="IV">
+        <comment>Create ingredients table</comment>
+        <sql>
+            CREATE TABLE ingredients
+            (
+                id bigserial NOT NULL PRIMARY KEY,
+                loss_probability integer NOT NULL ,
+                name character varying(50) NOT NULL UNIQUE,
+                price integer NOT NULL
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="4" author="IV">
+        <comment>Create table recipes</comment>
+        <sql>
+            CREATE TABLE recipes
+            (
+                recipe_ingredient_id bigint NOT NULL REFERENCES ingredients(id),
+                ingredients_id bigint NOT NULL REFERENCES ingredients(id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="5" author="IV">
+        <comment>Create users_ingredients table</comment>
+        <sql>
+            CREATE TABLE users_ingredients
+            (
+                ingredient_id bigint NOT NULL REFERENCES ingredients(id),
+                count integer,
+                user_id bigint NOT NULL REFERENCES users(id)
+            );
+        </sql>
+    </changeSet>
+
+
+</databaseChangeLog>
