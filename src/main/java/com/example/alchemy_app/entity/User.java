@@ -7,51 +7,38 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.ReadOnlyProperty;
+
 
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @NoArgsConstructor
-@Builder
+@Builder(setterPrefix = "with")
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "users")
-public class User implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+@Table(name = "usr")
+public class User {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ReadOnlyProperty
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "user_generator")
+    @SequenceGenerator(name = "user_generator", sequenceName = "user_id_seq",
+            allocationSize = 100,initialValue = 500)
     private Long id;
 
-    @Column(name = "date_of_create")
-    @ReadOnlyProperty
-    @CreationTimestamp
-    private LocalDateTime dtCreate;
-
-    @ElementCollection(targetClass = UserRole.class,fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role",joinColumns = @JoinColumn(name = "id"))
+    @JoinTable(name = "user_role")
     @Enumerated(EnumType.STRING)
-    private Set<UserRole> userRole;
+    private UserRole userRole;
 
     @Column(name = "mail",unique = true)
     private String mail;
@@ -60,7 +47,7 @@ public class User implements Serializable {
     private String login;
 
     @Column(name = "password")
-    private String password;
+    private char[] password;
 
     @Column(name = "is_active")
     private boolean isActive;

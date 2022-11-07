@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog logicalFilePath="db.changelog-master.xml" xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet id="1" author="IV">
+        <comment>Create user table</comment>
+        <sql>
+            CREATE TABLE usr
+            (
+                id bigint NOT NULL PRIMARY KEY,
+                is_active boolean NOT NULL,
+                login varchar(50) UNIQUE NOT NULL,
+                mail varchar(50) UNIQUE NOT NULL ,
+                password varchar(60) NOT NULL,
+                user_role varchar(50) NOT NULL,
+                gold integer NOT NULL
+            );
+            ALTER TABLE usr ADD CONSTRAINT mail_validation CHECK (mail ~* '^[A-Za-z]{1}[a-zA-Z0-9.-_]+@[A-Za-z0-9.-]+[.][A-Za-z]+$');
+        </sql>
+    </changeSet>
+
+    <changeSet id="2" author="IV">
+        <comment>Create sequence for user ids</comment>
+        <sql>
+            CREATE SEQUENCE user_id_seq START 500 INCREMENT 100;
+        </sql>
+    </changeSet>
+
+    <changeSet id="3" author="IV">
+        <comment>Create user_role table</comment>
+        <sql>
+            CREATE TABLE user_role
+            (
+                user_role varchar(50) NOT NULL
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="4" author="IV">
+        <comment>Create ingredient table</comment>
+        <sql>
+            CREATE TABLE ingredient
+            (
+                id bigint NOT NULL PRIMARY KEY,
+                loss_probability integer NOT NULL ,
+                name varchar(50) NOT NULL UNIQUE,
+                price integer NOT NULL
+            );
+            ALTER TABLE ingredient ADD CONSTRAINT price_validation CHECK (price >= 0);
+            ALTER TABLE ingredient ADD CONSTRAINT loss_probability_validation CHECK (loss_probability BETWEEN 0 AND 100);
+        </sql>
+    </changeSet>
+
+    <changeSet id="5" author="IV">
+        <comment>Create sequence for ingredient ids</comment>
+        <sql>
+            CREATE SEQUENCE ingredient_id_seq START 1000 INCREMENT 100;
+        </sql>
+    </changeSet>
+
+    <changeSet id="6" author="IV">
+        <comment>Create table recipes</comment>
+        <sql>
+            CREATE TABLE recipe
+            (
+                recipe_id bigint NOT NULL REFERENCES ingredient(id),
+                ingredients bigint NOT NULL REFERENCES ingredient(id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="7" author="IV">
+        <comment>Create user_ingredient table</comment>
+        <sql>
+            CREATE TABLE user_ingredient
+            (
+                ingredient_id bigint NOT NULL REFERENCES ingredient(id),
+                count integer NOT NULL,
+                user_id bigint NOT NULL REFERENCES usr(id)
+            );
+        </sql>
+    </changeSet>
+
+
+
+
+</databaseChangeLog>

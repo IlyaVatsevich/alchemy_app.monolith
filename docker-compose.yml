@@ -1,0 +1,13 @@
+version: '3.5'
+
+services:
+  db:
+    build: postgresql
+    image: alchemy_db_postgresql:1.0.0
+    container_name: db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    restart: always

@@ -3,8 +3,9 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <include file="version/ddl/db.changelog-1.0.xml" relativeToChangelogFile="true"/>
-    <include file="version/dml/db.changelog-1.0.xml" relativeToChangelogFile="true"/>
+    <include file="version/ddl/V1_init_db.xml" relativeToChangelogFile="true"/>
+    <include file="version/dml/V1_insert_users.xml" relativeToChangelogFile="true"/>
+    <include file="version/dml/V1_insert_basic_ingrs.xml" relativeToChangelogFile="true"/>
 
 
 </databaseChangeLog>

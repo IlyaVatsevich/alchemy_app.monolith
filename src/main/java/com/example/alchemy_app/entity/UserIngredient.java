@@ -16,18 +16,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.io.Serializable;
 
 @Entity
 @NoArgsConstructor
-@Builder
+@Builder(setterPrefix = "with")
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "users_ingredients")
-public class UserIngredient implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+@Table(name = "user_ingredient")
+public class UserIngredient {
 
     @Id
     @Column(name = "ingredient_id")

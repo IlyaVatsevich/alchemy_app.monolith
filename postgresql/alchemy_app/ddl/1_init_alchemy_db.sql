@@ -1,0 +1,2 @@
+CREATE DATABASE alchemy_db;
+GRANT ALL PRIVILEGES ON DATABASE postgres TO postgres;
