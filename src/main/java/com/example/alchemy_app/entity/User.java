@@ -1,22 +1,20 @@
 package com.example.alchemy_app.entity;
 
 
-import com.example.alchemy_app.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -36,23 +34,23 @@ public class User {
             allocationSize = 100,initialValue = 500)
     private Long id;
 
-    @JoinTable(name = "user_role")
-    @Enumerated(EnumType.STRING)
-    private UserRole userRole;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_role",nullable = false,referencedColumnName = "id")
+    private Role userRole;
 
-    @Column(name = "mail",unique = true)
+    @Column(name = "mail",unique = true,nullable = false)
     private String mail;
 
-    @Column(name = "login",unique = true)
+    @Column(name = "login",unique = true,nullable = false)
     private String login;
 
-    @Column(name = "password")
+    @Column(name = "password",nullable = false)
     private char[] password;
 
-    @Column(name = "is_active")
+    @Column(name = "is_active",nullable = false)
     private boolean isActive;
 
-    @Column(name = "gold")
+    @Column(name = "gold",nullable = false)
     private int gold;
 
 }

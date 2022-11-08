@@ -3,7 +3,7 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet id="11" author="IV">
+    <changeSet id="14" author="IV">
         <comment>Insert basic ingredients</comment>
         <sql>
             INSERT INTO ingredient (id,name,price,loss_probability)
@@ -14,7 +14,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="12" author="IV">
+    <changeSet id="15" author="IV">
         <comment>Insert basic elements into user_1</comment>
         <sql>
             INSERT INTO user_ingredient(user_id, count, ingredient_id)
@@ -25,7 +25,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="13" author="IV">
+    <changeSet id="16" author="IV">
         <comment>Insert basic elements into admin_1</comment>
         <sql>
             INSERT INTO user_ingredient(user_id, count, ingredient_id)

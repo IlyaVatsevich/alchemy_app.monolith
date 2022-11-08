@@ -4,8 +4,8 @@ services:
   alchemy_app:
     build: .
     image: alchemy_app:1.0.0
-    networks:
-      - alchemy_network
+    depends_on:
+      - db
 
   db:
     image: postgres:14.4-alpine
@@ -16,27 +16,9 @@ services:
     ports:
       - "5432:5432"
     restart: always
-    networks:
-      - alchemy_network
-  pgadmin:
-    build: pgadmin
-    image: alchemy_pgadmin:1.0.0
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: root
-    ports:
-      - "83:80"
-    networks:
-      - alchemy_network
 
   proxy:
     build: proxy
     image: afisha_proxy:1.0.0
     ports:
       - "8080:8080"
-    networks:
-      - alchemy_network
-networks:
-  alchemy_network:
-    name: alchemy_network
