@@ -41,16 +41,16 @@ public class Ingredient  {
     private String name;
 
     @Column(name = "price")
-    private int price;
+    private Integer price;
 
     @Column(name = "loss_probability")
-    private int lossProbability;
+    private Integer lossProbability;
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable(
             name = "recipe",
-            joinColumns = { @JoinColumn(name = "recipe_id",referencedColumnName = "id") },
-            inverseJoinColumns = { @JoinColumn(name = "ingredients") }
+            joinColumns = { @JoinColumn(name = "recipe_ingredient_id",referencedColumnName = "id") },
+            inverseJoinColumns = { @JoinColumn(name = "ingredient_id") }
     )
     private List<Ingredient> ingredients;
 

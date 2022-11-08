@@ -9,7 +9,7 @@
         <sql>
             CREATE TABLE usr
             (
-                id bigint NOT NULL PRIMARY KEY,
+                id bigint PRIMARY KEY,
                 is_active boolean NOT NULL,
                 login varchar(50) UNIQUE NOT NULL,
                 mail varchar(50) UNIQUE NOT NULL ,
@@ -24,7 +24,8 @@
     <changeSet id="2" author="IV">
         <comment>Create sequence for user ids</comment>
         <sql>
-            CREATE SEQUENCE user_id_seq START 500 INCREMENT 100;
+            CREATE SEQUENCE user_id_seq START 500 INCREMENT 100
+            OWNED BY usr.id;
         </sql>
     </changeSet>
 
@@ -43,7 +44,7 @@
         <sql>
             CREATE TABLE ingredient
             (
-                id bigint NOT NULL PRIMARY KEY,
+                id bigint PRIMARY KEY,
                 loss_probability integer NOT NULL ,
                 name varchar(50) NOT NULL UNIQUE,
                 price integer NOT NULL
@@ -56,7 +57,8 @@
     <changeSet id="5" author="IV">
         <comment>Create sequence for ingredient ids</comment>
         <sql>
-            CREATE SEQUENCE ingredient_id_seq START 1000 INCREMENT 100;
+            CREATE SEQUENCE ingredient_id_seq START 1000 INCREMENT 100
+            OWNED BY ingredient.id;
         </sql>
     </changeSet>
 
@@ -65,8 +67,8 @@
         <sql>
             CREATE TABLE recipe
             (
-                recipe_id bigint NOT NULL REFERENCES ingredient(id),
-                ingredients bigint NOT NULL REFERENCES ingredient(id)
+                recipe_ingredient_id bigint NOT NULL REFERENCES ingredient(id),
+                ingredient_id bigint NOT NULL REFERENCES ingredient(id)
             );
         </sql>
     </changeSet>
@@ -82,8 +84,5 @@
             );
         </sql>
     </changeSet>
-
-
-
 
 </databaseChangeLog>

@@ -6,6 +6,7 @@
     <include file="version/ddl/V1_init_db.xml" relativeToChangelogFile="true"/>
     <include file="version/dml/V1_insert_users.xml" relativeToChangelogFile="true"/>
     <include file="version/dml/V1_insert_basic_ingrs.xml" relativeToChangelogFile="true"/>
+    <include file="version/ddl/V1_comment_on_column.xml" relativeToChangelogFile="true"/>
 
 
 </databaseChangeLog>
