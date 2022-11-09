@@ -5,25 +5,6 @@
 
 
     <changeSet id="1" author="IV">
-        <comment>Create user_role table</comment>
-        <sql>
-            CREATE TABLE role
-            (
-                id bigint PRIMARY KEY,
-                user_role varchar(50) NOT NULL
-            );
-        </sql>
-    </changeSet>
-
-    <changeSet id="2" author="IV">
-        <comment>Create sequence for role ids</comment>
-        <sql>
-            CREATE SEQUENCE role_id_seq START 100 INCREMENT 100
-            OWNED BY role.id;
-        </sql>
-    </changeSet>
-
-    <changeSet id="3" author="IV">
         <comment>Create user table</comment>
         <sql>
             CREATE TABLE usr
@@ -33,14 +14,24 @@
                 login varchar(50) UNIQUE NOT NULL,
                 mail varchar(50) UNIQUE NOT NULL ,
                 password varchar(60) NOT NULL,
-                user_role bigint REFERENCES role(id) NOT NULL,
                 gold integer NOT NULL
             );
             ALTER TABLE usr ADD CONSTRAINT mail_validation CHECK (mail ~* '^[A-Za-z]{1}[a-zA-Z0-9.-_]+@[A-Za-z0-9.-]+[.][A-Za-z]+$');
         </sql>
     </changeSet>
 
-    <changeSet id="4" author="IV">
+    <changeSet id="2" author="IV">
+        <comment>Create user_role table</comment>
+        <sql>
+            CREATE TABLE user_role
+            (
+                id bigint REFERENCES usr(id) NOT NULL ,
+                user_role varchar(50) NOT NULL
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="3" author="IV">
         <comment>Create sequence for user ids</comment>
         <sql>
             CREATE SEQUENCE user_id_seq START 500 INCREMENT 100
@@ -48,7 +39,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="5" author="IV">
+    <changeSet id="4" author="IV">
         <comment>Create ingredient table</comment>
         <sql>
             CREATE TABLE ingredient
@@ -63,7 +54,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="6" author="IV">
+    <changeSet id="5" author="IV">
         <comment>Create sequence for ingredient ids</comment>
         <sql>
             CREATE SEQUENCE ingredient_id_seq START 1000 INCREMENT 100
@@ -71,7 +62,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="7" author="IV">
+    <changeSet id="6" author="IV">
         <comment>Create table recipes</comment>
         <sql>
             CREATE TABLE recipe
@@ -82,7 +73,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="8" author="IV">
+    <changeSet id="7" author="IV">
         <comment>Create user_ingredient table</comment>
         <sql>
             CREATE TABLE user_ingredient
@@ -94,7 +85,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="9" author="IV">
+    <changeSet id="8" author="IV">
         <setColumnRemarks
                 tableName="recipe"
                 columnName="recipe_ingredient_id"
@@ -102,7 +93,7 @@
         />
     </changeSet>
 
-    <changeSet id="10" author="IV">
+    <changeSet id="9" author="IV">
         <setColumnRemarks
                 tableName="recipe"
                 columnName="ingredient_id"

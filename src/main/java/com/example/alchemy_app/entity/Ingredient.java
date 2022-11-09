@@ -19,7 +19,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -29,9 +28,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "ingredient")
-public class Ingredient implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Ingredient  {
 
     @Id
     @Column(name = "id")
