@@ -40,7 +40,7 @@ public class User {
     private Long id;
 
     @ElementCollection(targetClass = UserRole.class,fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "id"))
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id",referencedColumnName = "id",nullable = false))
     @Enumerated(EnumType.STRING)
     private Set<UserRole> userRole;
 

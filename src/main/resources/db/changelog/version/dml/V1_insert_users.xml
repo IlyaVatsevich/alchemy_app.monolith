@@ -35,7 +35,7 @@
     <changeSet id="12" author="IV">
         <comment>Insert roles in user_role table</comment>
         <sql>
-            INSERT INTO user_role (id,user_role)
+            INSERT INTO user_role (user_id,user_role)
             VALUES (500,'USER'),
                    (600,'ADMIN'),
                    (600,'USER');

@@ -25,7 +25,7 @@
         <sql>
             CREATE TABLE user_role
             (
-                id bigint REFERENCES usr(id) NOT NULL ,
+                user_id bigint REFERENCES usr(id) NOT NULL ,
                 user_role varchar(50) NOT NULL
             );
         </sql>
