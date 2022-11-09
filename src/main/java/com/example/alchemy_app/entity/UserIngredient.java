@@ -32,7 +32,7 @@ public class UserIngredient {
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "user_id",nullable = false)
-    private User userId;
+    private User user;
 
     @ManyToOne
     @MapsId("ingredientId")
