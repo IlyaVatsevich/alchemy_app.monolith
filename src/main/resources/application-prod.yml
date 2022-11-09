@@ -1,0 +1,23 @@
+spring:
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  datasource:
+    username: ${DATASOURCE_USERNAME:postgres}
+    password: ${DATASOURCE_PASSWORD:postgres}
+    url: ${DATASOURCE_URL:jdbc:postgresql://db:5432/alchemy_db}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
+        show_sql: true
+        format_sql: true
+    hibernate:
+      ddl-auto: validate
+    database: postgresql
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+server:
+  port: 8080
+
+
