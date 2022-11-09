@@ -15,9 +15,3 @@ services:
       POSTGRES_DB: alchemy_db
     ports:
       - "5432:5432"
-
-  proxy:
-    build: proxy
-    image: afisha_proxy:1.0.0
-    ports:
-      - "8080:8080"
