@@ -50,10 +50,10 @@ public class UserIngredient {
 
         private static final long serialVersionUID = 1L;
 
-        @Column(name = "ingredient_id",nullable = false)
+        @Column(name = "ingredient_id")
         private Long ingredientId;
 
-        @Column(name = "user_id",nullable = false)
+        @Column(name = "user_id")
         private Long userId;
 
     }
