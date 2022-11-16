@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog logicalFilePath="db.changelog-master.xml" xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="13" author="IV">
+        <comment>Insert basic ingredients</comment>
+        <sql>
+            INSERT INTO ingredient (id,name,price,loss_probability)
+            VALUES (nextval('ingredient_id_seq'),'fire',0,0),
+                   (nextval('ingredient_id_seq'),'water',0,0),
+                   (nextval('ingredient_id_seq'),'wind',0,0),
+                   (nextval('ingredient_id_seq'),'earth',0,0);
+        </sql>
+    </changeSet>
+
+    <changeSet id="14" author="IV">
+        <comment>Insert basic elements into user_1</comment>
+        <sql>
+            INSERT INTO user_ingredient(user_id, count, ingredient_id)
+            VALUES  (500, 1, 1000),
+                    (500, 1, 1100),
+                    (500, 1, 1200),
+                    (500, 1, 1300);
+        </sql>
+    </changeSet>
+
+    <changeSet id="15" author="IV">
+        <comment>Insert basic elements into admin_1</comment>
+        <sql>
+            INSERT INTO user_ingredient(user_id, count, ingredient_id)
+            VALUES (600, 1, 1000),
+                   (600, 1, 1100),
+                   (600, 1, 1200),
+                   (600, 1, 1300);
+        </sql>
+    </changeSet>
+
+
+</databaseChangeLog>
