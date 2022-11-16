@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:tc:postgresql:14.4-alpine:///spring_boot_testcontainers
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  test:
+    database:
+      replace: none
+  liquibase:
+    change-log: classpath:db-test/changelog/db.test.changelog-master.xml

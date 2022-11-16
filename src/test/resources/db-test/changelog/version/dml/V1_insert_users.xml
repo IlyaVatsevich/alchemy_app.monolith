@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog logicalFilePath="db.changelog-master.xml" xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet id="10" author="IV">
+        <comment>Insert user_1</comment>
+        <sql>
+            INSERT INTO usr(id,is_active, login, mail, password, gold)
+            VALUES (nextval('user_id_seq'),
+                    true,
+                    'user_1',
+                    'user_1@yopmail.com',
+                    '$2a$10$LGau66DbAIfq64572BaGeOTjEnuKogz6lRHLvpSQGw6avaUQ6J2mu',
+                    100
+                   );
+        </sql>
+    </changeSet>
+
+    <changeSet id="11" author="IV">
+        <comment>Insert admin_1</comment>
+        <sql>
+            INSERT INTO usr(id,is_active, login, mail, password, gold)
+            VALUES (nextval('user_id_seq'),
+                    true,
+                    'admin_1',
+                    'admin_1@yopmail.com',
+                    '$2a$10$LGau66DbAIfq64572BaGeOTjEnuKogz6lRHLvpSQGw6avaUQ6J2mu',
+                    100
+                    );
+        </sql>
+    </changeSet>
+
+    <changeSet id="12" author="IV">
+        <comment>Insert roles in user_role table</comment>
+        <sql>
+            INSERT INTO user_role (user_id,user_role)
+            VALUES (500,'USER'),
+                   (600,'ADMIN'),
+                   (600,'USER');
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
