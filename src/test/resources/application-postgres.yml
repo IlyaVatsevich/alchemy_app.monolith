@@ -9,3 +9,10 @@ spring:
       replace: none
   liquibase:
     change-log: classpath:db-test/changelog/db.test.changelog-master.xml
+  mail:
+    host: 127.0.0.1
+    port: 3025
+    username: test
+    password: test
+    protocol: smtp
+    test-connection: true

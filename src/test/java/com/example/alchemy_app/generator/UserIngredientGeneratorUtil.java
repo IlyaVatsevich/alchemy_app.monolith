@@ -19,8 +19,8 @@ public class UserIngredientGeneratorUtil {
 
     private static UserIngredient.UserIngredientId createUserIngredientId(Long ingredientId,Long userId) {
         return UserIngredient.UserIngredientId.builder().
-                ingredientId(ingredientId).
-                userId(userId).
+                withIngredientId(ingredientId).
+                withUserId(userId).
                 build();
     }
 }

@@ -1,4 +1,4 @@
-package com.example.alchemy_app.test_container;
+package com.example.alchemy_app.repository;
 
 import com.example.alchemy_app.entity.Ingredient;
 import com.example.alchemy_app.entity.User;
@@ -6,9 +6,6 @@ import com.example.alchemy_app.entity.UserIngredient;
 import com.example.alchemy_app.generator.IngredientGeneratorUtil;
 import com.example.alchemy_app.generator.SecondaryGeneratorUtil;
 import com.example.alchemy_app.generator.UserIngredientGeneratorUtil;
-import com.example.alchemy_app.repository.IngredientRepository;
-import com.example.alchemy_app.repository.UserIngredientRepository;
-import com.example.alchemy_app.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

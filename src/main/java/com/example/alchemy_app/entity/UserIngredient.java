@@ -45,7 +45,7 @@ public class UserIngredient {
     @Embeddable
     @NoArgsConstructor
     @AllArgsConstructor
-    @Builder
+    @Builder(setterPrefix = "with")
     public static class UserIngredientId implements Serializable {
 
         private static final long serialVersionUID = 1L;
