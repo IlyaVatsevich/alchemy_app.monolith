@@ -1,21 +1,22 @@
 package com.example.alchemy_app.validation.user;
 
-import com.example.alchemy_app.annotation.user.ValidUserMail;
+import com.example.alchemy_app.annotation.user.ValidExistUserMail;
+import com.example.alchemy_app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 @RequiredArgsConstructor
-public class UserMailValidator implements ConstraintValidator<ValidUserMail,String> {
+public class UserExistMailValidator implements ConstraintValidator<ValidExistUserMail,String> {
 
-    private static final String MAIL_PATTERN = "^[A-Za-z][a-z.-_]+@[A-Za-z0-9.-]+[.][A-Za-z]+$";
+    private final UserRepository userRepository;
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (null == value || value.isBlank()) {
             return true;
         }
-        return value.matches(MAIL_PATTERN);
+        return !userRepository.existsByMail(value);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.alchemy_app.service.impl;
 
+import com.example.alchemy_app.dto.UserIngredientDto;
 import com.example.alchemy_app.entity.Ingredient;
 import com.example.alchemy_app.entity.User;
 import com.example.alchemy_app.entity.UserIngredient;
@@ -10,6 +11,8 @@ import com.example.alchemy_app.repository.UserRepository;
 import com.example.alchemy_app.service.UserIngredientService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,5 +59,11 @@ public class UserIngredientServiceImpl implements UserIngredientService {
     @Transactional
     public void saveRecipeAfterMix(Ingredient createdIngredient) {
         // TODO after security add
+    }
+
+    @Override
+    public Page<UserIngredientDto> findUserIngredientByUser(User user, Pageable pageable) {
+        return userIngredientRepository.findUserIngredientByUser(user,pageable).
+                map(userIngredientMapper::mapUserIngredientDtoFromUserIngredient);
     }
 }

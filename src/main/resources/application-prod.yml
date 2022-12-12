@@ -17,7 +17,26 @@ spring:
     database: postgresql
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.xml
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ilya.vatsevich@gmail.com
+    password: tgnuotehjvlpnwct
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
 server:
   port: 8080
 
+security-custom:
+  jwt-token:
+    jwt-secret: NDQ1ZjAzNjQtMzViZi00MDRjLTljZjQtNjNjYWIyZTU5ZDYw
+    jwt-issuer: IW
+    jwt-expiration: 7200000
+  refresh-token:
+    expiration: 604800000
 

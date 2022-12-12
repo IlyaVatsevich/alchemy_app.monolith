@@ -35,3 +35,11 @@ spring:
 server:
   port: 8080
 
+security-custom:
+  jwt-token:
+    jwt-secret: NDQ1ZjAzNjQtMzViZi00MDRjLTljZjQtNjNjYWIyZTU5ZDYw
+    jwt-issuer: IW
+    jwt-expiration: 7200000  # 2 hours
+  refresh-token:
+    expiration: 604800000 # 7 days
+
