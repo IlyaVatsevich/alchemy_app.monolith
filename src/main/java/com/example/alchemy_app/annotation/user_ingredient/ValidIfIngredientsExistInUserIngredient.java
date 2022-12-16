@@ -1,6 +1,6 @@
-package com.example.alchemy_app.annotation.user;
+package com.example.alchemy_app.annotation.user_ingredient;
 
-import com.example.alchemy_app.validation.ingredient.BuyIngredientValidator;
+import com.example.alchemy_app.validation.user_ingredient.IngredientsExistInUserIngredientValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -11,10 +11,10 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.TYPE, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = BuyIngredientValidator.class)
-public @interface ValidEnoughGoldToBuy {
+@Constraint(validatedBy = IngredientsExistInUserIngredientValidator.class)
+public @interface ValidIfIngredientsExistInUserIngredient {
 
-    String message() default "You have no enough gold to buy this ingredient(s).";
+    String message() default "You have no such ingredient's in your bag.";
 
     Class<?>[] groups() default {};
 

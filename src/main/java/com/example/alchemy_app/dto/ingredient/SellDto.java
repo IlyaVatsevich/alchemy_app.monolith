@@ -16,12 +16,12 @@ import javax.validation.constraints.NotNull;
 @Getter
 public class SellDto {
 
-    //TODO ValidIfIngredientPrice > 0
     @NotNull(message = "Ingredients to sell must be filled.")
     @ValidIfIngredientExist
     @ValidIfIngredientExistInUserIngredient
     private Long ingredientId;
 
+    @NotNull(message = "Count of ingredient's to sell must be filled.")
     @Min(value = 1,message = "For selling you can't select less than {value} ingredient(s).")
     private int count;
 

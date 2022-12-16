@@ -13,10 +13,10 @@ public interface IngredientRepository extends JpaRepository<Ingredient,Long> {
 
     boolean existsIngredientByName(String name);
 
-    @Query("SELECT i.id " +
+    @Query("SELECT i " +
             "FROM Ingredient i " +
             "WHERE SIZE(i.ingredients) = ?1 ")
-    List<Long> findIngredientByIngredients(Integer size);
+    List<Ingredient> findIngredientByIngredients(Integer size);
 
     @Query(value =
             "SELECT matches.result " +
@@ -24,6 +24,8 @@ public interface IngredientRepository extends JpaRepository<Ingredient,Long> {
                     "FROM recipe r " +
                     "WHERE r.ingredient_id IN (?2) AND r.recipe_ingredient_id IN (?1) " +
                     "GROUP BY r.recipe_ingredient_id) matches",nativeQuery = true)
-    List<Long> findByIngredients(List<Long> ingredientsIds,List<Long> ingredientIdsInIngredient);
+    List<Long> findByIngredients(List<Ingredient> ingredients,List<Long> ingredientIdsInIngredient);
+
+    Ingredient findIngredientById(Long id);
 
 }

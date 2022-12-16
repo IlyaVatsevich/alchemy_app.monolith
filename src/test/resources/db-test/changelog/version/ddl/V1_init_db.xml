@@ -102,4 +102,16 @@
         />
     </changeSet>
 
+    <changeSet id="16" author="IV">
+        <comment>Create refresh_token table</comment>
+        <sql>
+            CREATE TABLE refresh_token
+            (
+                user_id bigint NOT NULL UNIQUE REFERENCES usr(id),
+                token varchar(36) NOT NULL UNIQUE,
+                expiry_date timestamp NOT NULL
+            )
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>

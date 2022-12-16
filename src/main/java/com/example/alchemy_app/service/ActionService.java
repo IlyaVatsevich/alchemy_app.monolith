@@ -13,8 +13,8 @@ public interface ActionService {
 
     MixResponse mixIngredients(@Valid MixDto mixDto);
 
-    String sellIngredients(@Valid SellDto sellDto);
+    void sellIngredients(@Valid SellDto sellDto);
 
-    String buyIngredients(@Valid BuyDto buyDto);
+    void buyIngredients(@Valid BuyDto buyDto);
 
 }

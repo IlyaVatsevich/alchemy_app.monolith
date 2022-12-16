@@ -14,12 +14,12 @@ public class UserIngredientMapper {
 
     private final IngredientMapper ingredientMapper;
 
-    public UserIngredient buildUserIngredient(Ingredient ingredient, User user) {
+    public UserIngredient buildUserIngredient(Ingredient ingredient, User user,int count) {
         return UserIngredient.builder().
                 withId(buildUserIngredientId(ingredient.getId(),user.getId())).
                 withIngredient(ingredient).
                 withUser(user).
-                withCount(1).
+                withCount(count).
                 build();
     }
 

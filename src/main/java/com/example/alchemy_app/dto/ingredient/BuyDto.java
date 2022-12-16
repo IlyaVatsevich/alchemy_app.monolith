@@ -1,14 +1,13 @@
 package com.example.alchemy_app.dto.ingredient;
 
 import com.example.alchemy_app.annotation.ingredient.ValidIfIngredientExist;
-import com.example.alchemy_app.annotation.user.ValidEnoughGoldToBuy;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.jackson.Jacksonized;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @Builder(setterPrefix = "with")
@@ -16,12 +15,12 @@ import javax.validation.constraints.NotEmpty;
 @Getter
 public class BuyDto {
 
-    @NotEmpty(message = "Ingredients which you want to buy must be filled.")
+    @NotNull(message = "Ingredient which you want to buy must be filled.")
     @ValidIfIngredientExist
-    @ValidEnoughGoldToBuy
     private Long ingredientId;
 
     @Min(value = 1,message = "For buying you can't select less than {value} ingredient(s).")
+    @NotNull(message = "Count of ingredient's to buy must be filled")
     private int count;
 
 }

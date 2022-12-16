@@ -14,7 +14,6 @@ import com.example.alchemy_app.mapper.TokenMapper;
 import com.example.alchemy_app.mapper.UserMapper;
 import com.example.alchemy_app.repository.UserRepository;
 import com.example.alchemy_app.security.UserDetailsImpl;
-import com.example.alchemy_app.security.UserHolder;
 import com.example.alchemy_app.service.RefreshTokenService;
 import com.example.alchemy_app.service.UserIngredientService;
 import com.example.alchemy_app.service.UserService;
@@ -42,7 +41,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final TokenMapper tokenMapper;
     private final RefreshTokenService refreshTokenService;
     private final PasswordEncoder passwordEncoder;
-    private final UserHolder userHolder;
     private final JwtTokenUtilize jwtTokenUtilize;
 
     @Override
@@ -54,6 +52,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public TokenResponse login(UserLogDto userLogDto) {
         UserDetails userDetails = loadUserByUsername(userLogDto.getLogin());
         if (!passwordEncoder.matches(userLogDto.getPassword(),userDetails.getPassword())) {
@@ -77,10 +76,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public Page<UserIngredientDto> getUserIngredient(Pageable pageable) {
-        return userIngredientService.findUserIngredientByUser(userHolder.getUser(),pageable);
+        return userIngredientService.findUserIngredientsByUser(pageable);
     }
 
     @Override
+    @Transactional
     public TokenResponse getNewAccessAndRefreshTokenByRefreshToken(TokenRequest tokenRequest) {
         RefreshToken oldRefreshToken = refreshTokenService.findByToken(tokenRequest.getRefreshToken());
         String accessToken = jwtTokenUtilize.generateAccessToken(oldRefreshToken.getUser().getLogin());

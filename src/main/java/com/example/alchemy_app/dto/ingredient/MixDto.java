@@ -1,7 +1,7 @@
 package com.example.alchemy_app.dto.ingredient;
 
 import com.example.alchemy_app.annotation.ingredient.ValidIfIngredientsExist;
-import com.example.alchemy_app.annotation.user_ingredient.ValidIfIngredientExistInUserIngredient;
+import com.example.alchemy_app.annotation.user_ingredient.ValidIfIngredientsExistInUserIngredient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,7 +20,7 @@ public class MixDto {
     @NotEmpty(message = "Ingredients to mix must be filled")
     @Size(min = 2,message = "You can't mix less than {min} ingredients")
     @ValidIfIngredientsExist
-    @ValidIfIngredientExistInUserIngredient
+    @ValidIfIngredientsExistInUserIngredient
     private List<Long> ingredientsIds;
 
 }

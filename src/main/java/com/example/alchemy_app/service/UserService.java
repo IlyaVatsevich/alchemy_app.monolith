@@ -25,6 +25,6 @@ public interface UserService {
 
     Page<UserIngredientDto> getUserIngredient(Pageable pageable);
 
-    TokenResponse getNewAccessAndRefreshTokenByRefreshToken(TokenRequest tokenRequest);
+    TokenResponse getNewAccessAndRefreshTokenByRefreshToken(@Valid TokenRequest tokenRequest);
 
 }

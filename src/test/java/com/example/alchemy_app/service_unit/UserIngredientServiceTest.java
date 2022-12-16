@@ -72,7 +72,7 @@ class UserIngredientServiceTest {
         List<User> users = List.of(user);
         when(mockClass.getUserRepository().findAll()).thenReturn(users);
         Set<UserIngredient> userIngredients = Set.of(userIngredient);
-        when(userIngredientMapper.buildUserIngredient(ingredient,user)).thenReturn(userIngredient);
+        when(userIngredientMapper.buildUserIngredient(ingredient,user,1)).thenReturn(userIngredient);
         when(userIngredientRepository.saveAll(userIngredients)).thenReturn(new ArrayList<>(userIngredients));
         Assertions.assertDoesNotThrow(() -> userIngredientService.addNewBasicIngredientToUsers(ingredient));
     }
@@ -82,7 +82,7 @@ class UserIngredientServiceTest {
         Set<Ingredient> ingredients = Set.of(ingredient);
         when(mockClass.getIngredientRepository().getAllBasicIngredients()).thenReturn(ingredients);
         Set<UserIngredient> userIngredients = Set.of(userIngredient);
-        when(userIngredientMapper.buildUserIngredient(ingredient,user)).thenReturn(userIngredient);
+        when(userIngredientMapper.buildUserIngredient(ingredient,user,1)).thenReturn(userIngredient);
         when(userIngredientRepository.saveAll(userIngredients)).thenReturn(new ArrayList<>(userIngredients));
         Assertions.assertDoesNotThrow(()->userIngredientService.initializeUserIngredient(user));
     }

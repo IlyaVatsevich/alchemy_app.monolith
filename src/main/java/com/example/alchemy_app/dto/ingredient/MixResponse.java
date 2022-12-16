@@ -17,4 +17,6 @@ public class MixResponse {
 
     private List<Long> deletedIngredientIds;
 
+    private IngredientResponseDto createdIngredient;
+
 }

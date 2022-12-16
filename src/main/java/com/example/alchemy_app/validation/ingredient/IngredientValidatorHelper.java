@@ -27,7 +27,7 @@ public class IngredientValidatorHelper {
     public boolean ifIngredientWithSuchIngredientsAlreadyExist(List<Long> ingredientIds) {
         List<Long> matchingIngredientIds = getMatchingIngredientIds(ingredientIds);
         if (!matchingIngredientIds.isEmpty()) {
-            return matchingIngredientIds.stream().anyMatch(aLong -> aLong == ingredientIds.size());
+            return matchingIngredientIds.stream().anyMatch(result -> result == ingredientIds.size());
         }
         return false;
     }
@@ -36,7 +36,7 @@ public class IngredientValidatorHelper {
         return ingredientRepository.findByIngredients(getIngredientIdsWithEqualIngredientsSize(ingredientIds),ingredientIds);
     }
 
-    private List<Long> getIngredientIdsWithEqualIngredientsSize(List<Long> ingredientIds) {
+    private List<Ingredient> getIngredientIdsWithEqualIngredientsSize(List<Long> ingredientIds) {
         return ingredientRepository.findIngredientByIngredients(ingredientIds.size());
     }
 
