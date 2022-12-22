@@ -63,7 +63,7 @@ class ActionServiceTest {
         recipeIngredient.setId(1400L);
         recipeIngredient.setIngredients(List.of(validIngredientOne,validIngredientTwo));
         MixDto mixDto = MixSellBuyGeneratorUtil.generateMixDto();
-        given(mockClass.getIngredientRepository().findIngredientByIngredients(mixDto.getIngredientsIds().size())).willReturn(List.of(recipeIngredient));
+        given(mockClass.getIngredientRepository().findIngredientByIngredients(mixDto.getIngredientIds().size())).willReturn(List.of(recipeIngredient));
         given(mixMapper.buildSuccessfulMixResponse(recipeIngredient)).willReturn(getMixResponse());
         Assertions.assertTrue(actionService.mixIngredients(mixDto).isSuccessful());
     }

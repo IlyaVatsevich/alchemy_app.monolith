@@ -17,7 +17,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
-@ActiveProfiles("postgres")
+@ActiveProfiles("test")
 class EmailSenderServiceTest {
 
     @Autowired

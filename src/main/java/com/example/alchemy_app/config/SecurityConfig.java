@@ -20,6 +20,10 @@ public class SecurityConfig  {
 
     private static final String USER_AUTHORITY = UserRole.USER.getAuthority();
     private static final String ADMIN_AUTHORITY = UserRole.ADMIN.getAuthority();
+    private static final String[] OPEN_API = {
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+    };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -38,6 +42,7 @@ public class SecurityConfig  {
                 .and();
 
         http.authorizeRequests()
+                .antMatchers(OPEN_API).permitAll()
                 .antMatchers(
                         "/api/v1/user/registration",
                         "/api/v1/user/login",

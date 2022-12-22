@@ -36,7 +36,7 @@ public class ActionServiceImpl implements ActionService {
     @Transactional
     public MixResponse mixIngredients(MixDto mixDto) {
         Ingredient recipeIngredient = getIngredientRecipeFromIngredients(mixDto);
-        List<Ingredient> ingredientsToMix = ingredientRepository.findAllById(mixDto.getIngredientsIds());
+        List<Ingredient> ingredientsToMix = ingredientRepository.findAllById(mixDto.getIngredientIds());
         if (recipeIngredient != null) {
             userIngredientService.saveUserIngredient(recipeIngredient,1);
             userIngredientService.changeUserIngredientCountByIngredients(ingredientsToMix,OperationType.DECREASE,1);
@@ -79,10 +79,10 @@ public class ActionServiceImpl implements ActionService {
     }
 
     private Ingredient getIngredientRecipeFromIngredients(MixDto mixDto) {
-        List<Ingredient> ingredientsMatching = ingredientRepository.findIngredientByIngredients(mixDto.getIngredientsIds().size());
+        List<Ingredient> ingredientsMatching = ingredientRepository.findIngredientByIngredients(mixDto.getIngredientIds().size());
         List<Ingredient> mixedIngredientRecipe = ingredientsMatching.stream().filter(recipeIngredient -> {
             List<Ingredient> ingredientsFrom = recipeIngredient.getIngredients();
-            return matchIngredients(ingredientsFrom,mixDto.getIngredientsIds());
+            return matchIngredients(ingredientsFrom,mixDto.getIngredientIds());
         }).collect(Collectors.toUnmodifiableList());
 
         if (mixedIngredientRecipe.isEmpty()) {

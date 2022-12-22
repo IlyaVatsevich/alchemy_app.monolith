@@ -12,13 +12,13 @@ public class MixSellBuyGeneratorUtil {
 
     public static MixDto generateMixDto() {
         return MixDto.builder().
-                withIngredientsIds(List.of(1000L,1200L)).
+                withIngredientIds(List.of(1000L,1200L)).
                 build();
     }
 
     public static MixDto generateMixDto(List<Long> ingredientIds) {
         return MixDto.builder().
-                withIngredientsIds(ingredientIds).
+                withIngredientIds(ingredientIds).
                 build();
     }
 

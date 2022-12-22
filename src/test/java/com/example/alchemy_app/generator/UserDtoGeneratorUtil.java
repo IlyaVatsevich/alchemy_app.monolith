@@ -1,5 +1,6 @@
 package com.example.alchemy_app.generator;
 
+import com.example.alchemy_app.dto.UserLogDto;
 import com.example.alchemy_app.dto.UserRegDto;
 
 public class UserDtoGeneratorUtil {
@@ -29,6 +30,30 @@ public class UserDtoGeneratorUtil {
                 withLogin(SecondaryGeneratorUtil.generateRndStr()).
                 withPassword("P@ssword!").
                 withMail(SecondaryGeneratorUtil.generateRndStr()).
+                build();
+    }
+
+    public static UserLogDto createValidLogUser() {
+        return UserLogDto.
+                builder().
+                withLogin("user_1").
+                withPassword("P@ssword1").
+                build();
+    }
+
+    public static UserLogDto createNotExistingLogUser() {
+        return UserLogDto.
+                builder().
+                withLogin(SecondaryGeneratorUtil.generateRndStr()).
+                withPassword("P@ssword1").
+                build();
+    }
+
+    public static UserLogDto createExistingUserWithInvalidPassword() {
+        return UserLogDto.
+                builder().
+                withLogin("user_1").
+                withPassword("P@ssword1!").
                 build();
     }
 

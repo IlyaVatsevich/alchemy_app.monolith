@@ -11,7 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 
 @DataJpaTest
-@ActiveProfiles("postgres")
+@ActiveProfiles("test")
 class UserRepositoryTest {
 
     @Autowired

@@ -1,6 +1,7 @@
 package com.example.alchemy_app.dto.ingredient;
 
 import com.example.alchemy_app.annotation.ingredient.ValidIfIngredientExist;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,8 +14,10 @@ import javax.validation.constraints.NotNull;
 @Builder(setterPrefix = "with")
 @Jacksonized
 @Getter
+@Schema(title = "Buy",description = "Use this to buy ingredient")
 public class BuyDto {
 
+    @Schema(example = "1000")
     @NotNull(message = "Ingredient which you want to buy must be filled.")
     @ValidIfIngredientExist
     private Long ingredientId;

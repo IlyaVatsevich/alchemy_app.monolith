@@ -17,7 +17,7 @@ import javax.validation.ValidationException;
 
 
 @SpringBootTest
-@ActiveProfiles("postgres")
+@ActiveProfiles("test")
 @Transactional
 class IngredientServiceTest {
 

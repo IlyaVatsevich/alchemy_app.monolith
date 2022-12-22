@@ -17,7 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
-@ActiveProfiles("postgres")
+@ActiveProfiles("test")
 @Transactional
 class UserIngredientServiceTest {
 

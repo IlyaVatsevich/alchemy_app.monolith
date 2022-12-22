@@ -24,7 +24,7 @@ import javax.validation.ValidationException;
 import java.util.List;
 
 @SpringBootTest
-@ActiveProfiles("postgres")
+@ActiveProfiles("test")
 @Transactional
 class ActionServiceTest {
 
