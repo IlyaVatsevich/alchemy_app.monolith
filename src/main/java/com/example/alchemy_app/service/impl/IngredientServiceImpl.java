@@ -43,24 +43,6 @@ public class IngredientServiceImpl implements IngredientService {
         emailSenderService.sendNotificationAboutNewIngredient(newIngredient);
     }
 
-    private Ingredient newBasicIngredient(IngredientCreateDto ingredientDto) {
-        checkParamsOfBasicIngredient(ingredientDto);
-        return ingredientMapper.fromDtoToEntity(ingredientDto);
-    }
-
-    private void checkParamsOfBasicIngredient(IngredientCreateDto ingredientDto) {
-        if (ingredientDto.getPrice()!=0 || ingredientDto.getLossProbability()!=0) {
-            throw new ValidationException("Loss probability and price of basic ingredient must be equal 0.");
-        }
-    }
-
-    private Ingredient newRecipeIngredient(IngredientCreateDto ingredientDto) {
-        List<Ingredient> ingredientsFromIngredientCreated = ingredientRepository.findAllById(ingredientDto.getIngredientIds());
-        Ingredient newRecipeIngredient = ingredientMapper.fromDtoToEntity(ingredientDto);
-        newRecipeIngredient.setIngredients(ingredientsFromIngredientCreated);
-        return newRecipeIngredient;
-    }
-
     @Override
     public Page<IngredientResponseDto> getAllIngredients(Pageable pageable) {
         return ingredientRepository.findAll(pageable).map(ingredientMapper::fromEntityToDto);
@@ -72,4 +54,17 @@ public class IngredientServiceImpl implements IngredientService {
                 orElseThrow(()->new EntityNotExistException("Ingredient with such id: " + id + ", not exist.")));
     }
 
+    private Ingredient newBasicIngredient(IngredientCreateDto ingredientDto) {
+        if (ingredientDto.getPrice()!=0 || ingredientDto.getLossProbability()!=0) {
+            throw new ValidationException("Loss probability and price of basic ingredient must be equal 0.");
+        }
+        return ingredientMapper.fromDtoToEntity(ingredientDto);
+    }
+
+    private Ingredient newRecipeIngredient(IngredientCreateDto ingredientDto) {
+        List<Ingredient> ingredientsFromIngredientCreated = ingredientRepository.findAllById(ingredientDto.getIngredientIds());
+        Ingredient newRecipeIngredient = ingredientMapper.fromDtoToEntity(ingredientDto);
+        newRecipeIngredient.setIngredients(ingredientsFromIngredientCreated);
+        return newRecipeIngredient;
+    }
 }

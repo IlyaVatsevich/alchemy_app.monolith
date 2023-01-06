@@ -39,4 +39,25 @@ security-custom:
     jwt-expiration: 7200000
   refresh-token:
     expiration: 604800000
+open_api:
+  paths:
+    user_path:
+      /api/v1/user/**
+    ingredient_path:
+      /api/v1/ingredient/**
+    action_path:
+      /api/v1/action/**
+    user_ingredient_path:
+      /api/v1/user_ingredient/**
+task_custom:
+  execution:
+    pool:
+      core-size: 5
+      max-size: 10
+      queue-capacity: 25
+    shutdown:
+      await-termination: true
+user_pattern:
+  start-gold: 100
+  is-active: true
 

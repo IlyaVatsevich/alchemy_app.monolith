@@ -1,11 +1,10 @@
 package com.example.alchemy_app.service.impl;
 
+import com.example.alchemy_app.dto.HighScoreTable;
 import com.example.alchemy_app.dto.TokenRequest;
 import com.example.alchemy_app.dto.TokenResponse;
 import com.example.alchemy_app.dto.UserLogDto;
-import com.example.alchemy_app.dto.UserIngredientDto;
 import com.example.alchemy_app.dto.UserRegDto;
-import com.example.alchemy_app.dto.HighScoreTable;
 import com.example.alchemy_app.entity.RefreshToken;
 import com.example.alchemy_app.entity.User;
 import com.example.alchemy_app.exception.EntityNotExistException;
@@ -45,10 +44,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional
-    public void registration(UserRegDto userRegDto) {
+    public TokenResponse registration(UserRegDto userRegDto) {
         User newUser = userRepository.save(userMapper.buildUser(userRegDto));
         log.info("New user with id - {} , saved successfully.",newUser.getId());
         userIngredientService.initializeUserIngredient(newUser);
+        return createTokenResponse(newUser);
     }
 
     @Override
@@ -58,10 +58,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (!passwordEncoder.matches(userLogDto.getPassword(),userDetails.getPassword())) {
             throw new PasswordNotCorrectException("Password not correct.");
         }
-        String refreshToken = refreshTokenService.createRefreshToken(((UserDetailsImpl) userDetails).getUser()).getToken();
-        String accessToken = jwtTokenUtilize.generateAccessToken(userDetails.getUsername());
-        logInfoAboutTokens(accessToken,refreshToken);
-        return tokenMapper.mapTokens(accessToken, refreshToken);
+        return createTokenResponse(((UserDetailsImpl) userDetails).getUser());
     }
 
     @Override
@@ -75,18 +72,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public Page<UserIngredientDto> getUserIngredient(Pageable pageable) {
-        return userIngredientService.findUserIngredientsByUser(pageable);
-    }
-
-    @Override
     @Transactional
     public TokenResponse getNewAccessAndRefreshTokenByRefreshToken(TokenRequest tokenRequest) {
         RefreshToken oldRefreshToken = refreshTokenService.findByToken(tokenRequest.getRefreshToken());
-        String accessToken = jwtTokenUtilize.generateAccessToken(oldRefreshToken.getUser().getLogin());
-        String newRefreshToken = refreshTokenService.updateUsedRefreshToken(oldRefreshToken).getToken();
-        logInfoAboutTokens(accessToken,newRefreshToken);
-        return tokenMapper.mapTokens(accessToken,newRefreshToken);
+        return createTokenResponse(oldRefreshToken.getUser());
     }
 
     @Override
@@ -94,6 +83,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = userRepository.findUserByLogin(username).
                 orElseThrow(() -> new EntityNotExistException("User with such login: " + username + ", not exist."));
         return new UserDetailsImpl(user);
+    }
+
+    private TokenResponse createTokenResponse(User user) {
+        String refreshToken = refreshTokenService.createRefreshToken(user).getToken();
+        String accessToken = jwtTokenUtilize.generateAccessToken(user.getLogin());
+        logInfoAboutTokens(accessToken,refreshToken);
+        return tokenMapper.mapTokens(accessToken,refreshToken);
     }
 
     private void logInfoAboutTokens(String accessToken,String refreshToken) {

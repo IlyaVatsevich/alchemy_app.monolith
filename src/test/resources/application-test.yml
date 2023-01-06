@@ -34,3 +34,14 @@ open_api:
       /api/v1/ingredient/**
     action_path:
       /api/v1/action/**
+task_custom:
+  execution:
+    pool:
+      core-size: 5
+      max-size: 10
+      queue-capacity: 25
+    shutdown:
+      await-termination: true
+user_pattern:
+  start-gold: 100
+  is-active: true

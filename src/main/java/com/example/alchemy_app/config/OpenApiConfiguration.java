@@ -29,6 +29,9 @@ public class OpenApiConfiguration {
     @Value("${open_api.paths.action_path}")
     private String actionPath;
 
+    @Value("${open_api.paths.user_ingredient_path}")
+    private String userIngredientPath;
+
     @Bean
     public OpenAPI customizeOpenAPI() {
         final String securitySchemeName = "bearerAuth";
@@ -67,7 +70,7 @@ public class OpenApiConfiguration {
         return GroupedOpenApi.builder().
                 addOpenApiCustomiser(openApiCustomizerUser()).
                 group("user-api").
-                pathsToMatch(userPath).
+                pathsToMatch(userPath,userIngredientPath).
                 build();
     }
 

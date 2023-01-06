@@ -32,9 +32,9 @@ public interface ActionControllerApiDescription {
                             examples = @ExampleObject(
                                     value = "{\"successful\":true," +
                                             "\"created_ingredient\":" +
-                                            "{\"name\":\"lava\",\"price\":10,\"loss_probability\":20," +
-                                            "\"ingredients\":[{\"name\":\"water\",\"price\":10,\"loss_probability\":10}," +
-                                            "{\"name\":\"earth\",\"price\":5,\"loss_probability\":20}]}}"))),
+                                            "{\"id\":1400,\"name\":\"lava\",\"price\":10,\"loss_probability\":20," +
+                                            "\"ingredients\":[{\"id\":1600,\"name\":\"water\",\"price\":10,\"loss_probability\":10}," +
+                                            "{\"id\":1700,\"name\":\"earth\",\"price\":5,\"loss_probability\":20}]}}"))),
             @ApiResponse(responseCode = "400",description = "Client does not have required ingredient(s) or ingredient(s) don't exist"),
             @ApiResponse(responseCode = "401",description = "Client did not provide an authorization token"),
             @ApiResponse(responseCode = "500",description = "Internal server error")

@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 public class SecurityConfig  {
 
     private final JwtFilter filter;
-
     private static final String USER_AUTHORITY = UserRole.USER.getAuthority();
     private static final String ADMIN_AUTHORITY = UserRole.ADMIN.getAuthority();
     private static final String[] OPEN_API = {

@@ -1,5 +1,6 @@
 package com.example.alchemy_app.service;
 
+import com.example.alchemy_app.annotation.pageable.ValidSortProperty;
 import com.example.alchemy_app.dto.ingredient.IngredientCreateDto;
 import com.example.alchemy_app.dto.ingredient.IngredientResponseDto;
 import org.springframework.data.domain.Page;
@@ -13,7 +14,8 @@ public interface IngredientService {
 
     void createIngredient(@Valid IngredientCreateDto ingredientDto);
 
-    Page<IngredientResponseDto> getAllIngredients(Pageable pageable);
+    Page<IngredientResponseDto> getAllIngredients(@ValidSortProperty(
+            allowedProperties = {"name,id,price,lossProbability"}) Pageable pageable);
 
     IngredientResponseDto getIngredientById(Long id);
 

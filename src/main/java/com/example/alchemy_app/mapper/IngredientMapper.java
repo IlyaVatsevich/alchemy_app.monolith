@@ -20,6 +20,7 @@ public class IngredientMapper {
 
     public IngredientResponseDto fromEntityToDto(Ingredient ingredient) {
         return IngredientResponseDto.builder().
+                withId(ingredient.getId()).
                 withIngredients(mapIngredientDtos(ingredient.getIngredients())).
                 withName(ingredient.getName()).
                 withPrice(ingredient.getPrice()).

@@ -41,12 +41,6 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         return refreshToken;
     }
 
-    @Override
-    public RefreshToken updateUsedRefreshToken(RefreshToken refreshToken) {
-        refreshTokenMapper.updateRefreshToken(refreshToken);
-        return refreshTokenRepository.save(refreshToken);
-    }
-
     private void verifyExpiration(RefreshToken refreshToken) {
         if (refreshToken.getExpiryDate().isBefore(LocalDateTime.now())) {
             refreshTokenRepository.delete(refreshToken);

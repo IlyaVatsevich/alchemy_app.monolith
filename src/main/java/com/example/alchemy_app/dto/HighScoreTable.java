@@ -1,21 +1,11 @@
 package com.example.alchemy_app.dto;
 
+public interface HighScoreTable {
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.extern.jackson.Jacksonized;
+    String getLogin();
 
-@AllArgsConstructor
-@Builder(setterPrefix = "with")
-@Jacksonized
-@Getter
-public class HighScoreTable {
+    Long getScore();
 
-    private String login;
-
-    private Long score;
-
-    private Long place;
+    Long getPlace();
 
 }

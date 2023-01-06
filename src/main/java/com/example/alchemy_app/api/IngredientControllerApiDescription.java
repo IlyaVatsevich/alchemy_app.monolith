@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,7 +47,7 @@ public interface IngredientControllerApiDescription {
     })
     @GetMapping
     ResponseEntity<Page<IngredientResponseDto>> getAllIngredients(
-            @ParameterObject @PageableDefault(sort = "id") Pageable pageable);
+            @ParameterObject Pageable pageable);
 
     @Operation(summary = "Get ingredient by id")
     @ApiResponses(value = {

@@ -115,12 +115,6 @@ public class ActionServiceImpl implements ActionService {
     }
 
     private boolean isNeedToDelete(Ingredient ingredient) {
-        Short lossProbability = ingredient.getLossProbability();
-        if (lossProbability == 100) {
-            return true;
-        } else if (lossProbability == 0) {
-            return false;
-        }
-        return lossProbability < ThreadLocalRandom.current().nextInt(0, 100);
+        return ingredient.getLossProbability() > ThreadLocalRandom.current().nextInt(0, 100);
     }
 }

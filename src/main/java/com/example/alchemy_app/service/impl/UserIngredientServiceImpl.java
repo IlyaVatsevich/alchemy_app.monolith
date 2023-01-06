@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -34,6 +35,12 @@ public class UserIngredientServiceImpl implements UserIngredientService {
     private final IngredientRepository ingredientRepository;
     private final UserIngredientMapper userIngredientMapper;
     private final UserHolder userHolder;
+    private Set<Ingredient> basicIngredients;
+
+    @PostConstruct
+    private void initializeBasicIngredients() {
+        basicIngredients = ingredientRepository.getAllBasicIngredients();
+    }
 
     @Override
     @Transactional
@@ -43,13 +50,14 @@ public class UserIngredientServiceImpl implements UserIngredientService {
                 map(user -> userIngredientMapper.buildUserIngredient(ingredient, user,1)).
                 collect(Collectors.toCollection(HashSet::new));
         userIngredientRepository.saveAll(userIngredients);
+        basicIngredients.add(ingredient);
         log.info("Basic ingredient with id: " + ingredient.getId() + ", added to all user bags, successfully." );
     }
 
     @Override
     @Transactional
     public void initializeUserIngredient(User newUser) {
-        Set<UserIngredient> userIngredients = ingredientRepository.getAllBasicIngredients().
+        Set<UserIngredient> userIngredients = basicIngredients.
                 stream().
                 map(ingredient -> userIngredientMapper.buildUserIngredient(ingredient, newUser,1)).
                 collect(Collectors.toCollection(HashSet::new));
@@ -71,7 +79,7 @@ public class UserIngredientServiceImpl implements UserIngredientService {
     }
 
     @Override
-    public Page<UserIngredientDto> findUserIngredientsByUser(Pageable pageable) {
+    public Page<UserIngredientDto> getUserIngredient(Pageable pageable) {
         return userIngredientRepository.findUserIngredientByUser(userHolder.getUser(),pageable).
                 map(userIngredientMapper::mapUserIngredientDtoFromUserIngredient);
     }
@@ -81,6 +89,11 @@ public class UserIngredientServiceImpl implements UserIngredientService {
     public void changeUserIngredientCountByIngredients(List<Ingredient> ingredients,OperationType operationType,int count) {
         List<UserIngredient> userIngredientsWhoseCountIsChanged = changeCountOfExistingUserIngredient(ingredients, operationType, count);
         userIngredientRepository.saveAll(userIngredientsWhoseCountIsChanged);
+    }
+
+    @Override
+    public UserIngredient findUserIngredientByIngredient(Ingredient ingredient) {
+        return userIngredientRepository.findUserIngredientByIngredientAndUser(ingredient,userHolder.getUser());
     }
 
     private List<UserIngredient> changeCountOfExistingUserIngredient(List<Ingredient> ingredients, OperationType operation, int count) {
@@ -100,10 +113,5 @@ public class UserIngredientServiceImpl implements UserIngredientService {
         });
 
         return userIngredients;
-    }
-
-    @Override
-    public UserIngredient findUserIngredientByIngredient(Ingredient ingredient) {
-        return userIngredientRepository.findUserIngredientByIngredientAndUser(ingredient,userHolder.getUser());
     }
 }

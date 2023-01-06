@@ -11,7 +11,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Collectors;
@@ -31,12 +30,12 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     public void sendNotificationAboutNewIngredient(Ingredient ingredient) {
         Queue<SimpleMailMessage> messages = userRepository.findAll().
                 stream().
-                map(user -> createSimpleMessage(user.getMail(), ingredient)).
+                map(user -> createNotificationAboutNewIngredient(user.getMail(), ingredient)).
                 collect(Collectors.toCollection(LinkedBlockingQueue::new));
         taskExecutorCustom.execute(new MessagesSendRunnable(messages));
     }
 
-    private SimpleMailMessage createSimpleMessage(String address,Ingredient ingredient) {
+    private SimpleMailMessage createNotificationAboutNewIngredient(String address, Ingredient ingredient) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(address);
         simpleMailMessage.setSubject("Alchemy, new ingredient");
@@ -51,7 +50,8 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     }
 
     @AllArgsConstructor
-    private class MessagesSendRunnable implements Runnable{
+    private class MessagesSendRunnable implements Runnable {
+
         private final Queue<SimpleMailMessage> messages;
 
         @Override
@@ -59,7 +59,6 @@ public class EmailSenderServiceImpl implements EmailSenderService {
             while (!messages.isEmpty()) {
                 SimpleMailMessage[] messagesToSend = getArrayOfSimpleMessages();
                 mailSender.send(messagesToSend);
-                log.info("Messages sent: " + Arrays.toString(messagesToSend) + ", successfully.");
                 log.info("Messages to send left: " + messages.size());
                 sleepForOneMinute();
             }
@@ -72,6 +71,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
                     limit(size).
                     toArray(SimpleMailMessage[]::new);
         }
+
         private void sleepForOneMinute() {
             try {
                 Thread.sleep(70000);

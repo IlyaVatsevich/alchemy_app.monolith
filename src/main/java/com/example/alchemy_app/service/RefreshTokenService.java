@@ -9,6 +9,4 @@ public interface RefreshTokenService {
 
     RefreshToken findByToken(String token);
 
-    RefreshToken updateUsedRefreshToken(RefreshToken refreshToken);
-
 }

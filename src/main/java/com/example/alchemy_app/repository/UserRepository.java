@@ -14,13 +14,25 @@ public interface UserRepository extends JpaRepository<User,Long> {
     boolean existsByMail(String mail);
 
     boolean existsByLogin(String login);
-    @Query(name = "high_score_table_by_max_gold",nativeQuery = true)
+
+    @Query(value =
+            "SELECT u.login as login,u.gold as score, row_number() over (order by MAX(u.gold) DESC) as place " +
+            "FROM usr u JOIN user_ingredient ui on u.id = ui.user_id " +
+            "GROUP BY u.id " +
+            "ORDER BY place ",nativeQuery = true)
     Page<HighScoreTable> findUsersByMaxGold(Pageable pageable);
 
-    @Query(name = "high_score_table_by_max_ingredient_count",nativeQuery = true)
+    @Query(value =
+            "SELECT u.login as login,SUM(ui.count) as score, row_number() over (order by SUM(ui.count) DESC) as place " +
+            "FROM usr u JOIN user_ingredient ui on u.id = ui.user_id JOIN ingredient i on i.id = ui.ingredient_id " +
+            "WHERE i.price >0 AND i.loss_probability>0 " +
+            "GROUP BY u.id " +
+            "ORDER BY place ",nativeQuery = true)
     Page<HighScoreTable> findUsersByMaxUserIngredientCount(Pageable pageable);
 
     Optional<User> findUserByLogin(String login);
+
+
 
 
 

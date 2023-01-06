@@ -19,7 +19,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -51,7 +53,7 @@ class UserIngredientServiceTest {
 
 
     @BeforeEach
-    void setMocks() throws Exception {
+    void setMocks() {
         List<UserIngredientServiceImpl> services = List.of(userIngredientService);
         mockClass.setupIngredientRepository(services);
         mockClass.setupUserRepository(services);
@@ -59,12 +61,18 @@ class UserIngredientServiceTest {
 
 
     @BeforeEach
-    void setup()  {
+    void setup() throws NoSuchFieldException, IllegalAccessException {
         ingredient = IngredientGeneratorUtil.createValidIngredient();
         ingredient.setId(1L);
         user = UserGeneratorUtil.createValidUser();
         user.setId(1L);
         userIngredient = UserIngredientGeneratorUtil.createUserIngredient(user, ingredient,1);
+        Class<? extends UserIngredientServiceImpl> userIngredientServiceClass = userIngredientService.getClass();
+        Field basicIngredients = userIngredientServiceClass.getDeclaredField("basicIngredients");
+        basicIngredients.setAccessible(true);
+        Set<Ingredient> ingredients = new HashSet<>();
+        ingredients.add(ingredient);
+        basicIngredients.set(userIngredientService,ingredients);
     }
 
     @Test
@@ -79,8 +87,6 @@ class UserIngredientServiceTest {
 
     @Test
     void testInitializeUserIngredientShouldSaveAll(){
-        Set<Ingredient> ingredients = Set.of(ingredient);
-        when(mockClass.getIngredientRepository().getAllBasicIngredients()).thenReturn(ingredients);
         Set<UserIngredient> userIngredients = Set.of(userIngredient);
         when(userIngredientMapper.buildUserIngredient(ingredient,user,1)).thenReturn(userIngredient);
         when(userIngredientRepository.saveAll(userIngredients)).thenReturn(new ArrayList<>(userIngredients));

@@ -45,27 +45,13 @@ public class GlobalHandler {
                 build();
     }
 
-    @ExceptionHandler(EntityNotExistException.class)
+    @ExceptionHandler(value = {
+            EntityNotExistException.class,
+            IllegalArgumentException.class,
+            AuthenticationException.class,
+            ValidationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handle(EntityNotExistException e) {
-        return errorResponse(e.getMessage(),HttpStatus.BAD_REQUEST,LocalDateTime.now());
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handle(IllegalArgumentException e) {
-        return errorResponse(e.getMessage(),HttpStatus.BAD_REQUEST,LocalDateTime.now());
-    }
-
-    @ExceptionHandler(AuthenticationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handle(AuthenticationException e) {
-        return errorResponse(e.getMessage(),HttpStatus.BAD_REQUEST,LocalDateTime.now());
-    }
-
-    @ExceptionHandler(ValidationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handle(ValidationException e) {
+    public ErrorResponse handle(Throwable e) {
         return errorResponse(e.getMessage(),HttpStatus.BAD_REQUEST,LocalDateTime.now());
     }
 
